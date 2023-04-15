@@ -1,145 +1,58 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'home_viewmodel.dart';
+import 'photo_viewmodel.dart';
 
-abstract class HomeViewDelegate {
-  void homeViewFormCompleted(String heroName, String villainName, String historyContext);
+abstract class PhotoViewDelegate {
+  void photoViewPictureCompleted(String heroName, String villainName, String historyContext);
 }
 
-class HomeView extends StatefulWidget {
-  final HomeViewModel viewModel;
-  final HomeViewDelegate delegate;
-  const HomeView({Key? key, required this.viewModel, required this.delegate})
-      : super(key: key);
+class TakePictureScreen extends StatefulWidget {
+  const TakePictureScreen({
+    super.key,
+    required this.camera,
+  });
+
+  final CameraDescription camera;
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  TakePictureScreenState createState() => TakePictureScreenState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  String _heroName = '';
-  String _villainName = '';
-  int _currentIndex = 0;
-  final List<String> _historyContexts = [
-    'funny future',
-    'fantasy dragons',
-    'happy horror',
-    'school time'
-  ];
+class TakePictureScreenState extends State<TakePictureScreen> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
 
-  final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    // To display the current output from the Camera,
+    // create a CameraController.
+    _controller = CameraController(
+      // Get a specific camera from the list of available cameras.
+      widget.camera,
+      // Define the resolution to use.
+      ResolutionPreset.medium,
+    );
 
-  onCarouselPageChanged(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    // Next, initialize the controller. This returns a Future.
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed.
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 16),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter hero name',
-                  labelText: 'Hero Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter hero name';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  _heroName = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter villain name',
-                  labelText: 'Villain Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter villain name';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  _villainName = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 150.0,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.8,
-                  initialPage: _currentIndex,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: false,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  onPageChanged: onCarouselPageChanged(_currentIndex),
-                  scrollDirection: Axis.horizontal,
-                ),
-                items: _historyContexts.map((context) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            context.toString().toUpperCase(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    homeViewFormCompleted();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')));
-                  }
-                },
-                child: const Text('Submit'),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    // Fill this out in the next steps.
+    return Container();
   }
 
-
 //HomeViewDelegate
-  void homeViewFormCompleted() {
-    widget.delegate.homeViewFormCompleted(_heroName, _villainName, _historyContexts[_currentIndex]);
+  void photoViewPictureCompleted() {
+    // widget.delegate.photoViewPictureCompleted();
   }
 }

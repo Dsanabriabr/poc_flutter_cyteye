@@ -1,10 +1,15 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'App/constants.dart';
 import 'Presentation/Routes/routes.dart';
 import 'Presentation/DependencyInjection/getit.dart';
 
-void main() {
-  setupGetIt();
+Future<void> main() async {
+  
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+  setupGetIt(firstCamera);
   runApp(const MyApp());
 }
 

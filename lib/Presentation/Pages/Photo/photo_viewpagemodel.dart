@@ -21,7 +21,7 @@ class PhotoViewPageModel extends ChangeNotifier {
     storyData.fold((success) {
       print(success);
     }, (failure) {
-      throw Exception("HomeViewPageModel locationUseCase Fail for $failure");
+      throw Exception("PhotoViewPageModel locationUseCase Fail for $failure");
     });
     notifyListeners();
   }

@@ -1,11 +1,14 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import '../../../App/constants.dart';
 import '../../Views/Home/home_view.dart';
+import '../../Views/Photo/photo_view.dart';
 import 'photo_viewpagemodel.dart';
 
 class PhotoViewPage extends StatefulWidget {
   final PhotoViewPageModel viewModel;
-  const PhotoViewPage({Key? key, required this.viewModel}) : super(key: key);
+  final CameraDescription camera;
+  const PhotoViewPage({Key? key, required this.viewModel, required this.camera}) : super(key: key);
 
   @override
   State<PhotoViewPage> createState() => _PhotoViewPageState();
@@ -23,7 +26,7 @@ class _PhotoViewPageState extends State<PhotoViewPage> with HomeViewDelegate {
       appBar: AppBar(
         title: const Text(appTitle),
       ),
-      body: HomeView(viewModel: widget.viewModel.homeViewModel, delegate: this),
+      body: TakePictureScreen(camera: widget.camera),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           widget.viewModel.getNewStory();

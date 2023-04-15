@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../App/constants.dart';
 import '../../Views/Home/home_view.dart';
 import 'home_viewpagemodel.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeViewPage extends StatefulWidget {
   final HomeViewPageModel viewModel;
@@ -25,9 +26,7 @@ class _HomeViewPageState extends State<HomeViewPage> with HomeViewDelegate {
       ),
       body: HomeView(viewModel: widget.viewModel.homeViewModel, delegate: this),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          widget.viewModel.getNewStory();
-        },
+        onPressed: () => context.go('/photo'),
       ),
     );
   }

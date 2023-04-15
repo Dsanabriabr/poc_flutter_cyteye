@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../App/auth_service.dart';
-import '../../../Presentation/DependencyInjection/getit.dart';
+import '../../DependencyInjection/getit.dart';
+import 'package:go_router/go_router.dart';
 
-class LoginViewPage extends StatefulWidget {
-  const LoginViewPage({Key? key}) : super(key: key);
+class ConfirmViewPage extends StatefulWidget {
+  const ConfirmViewPage({Key? key}) : super(key: key);
  
  @override
-  State<LoginViewPage> createState() => _LoginViewPageState();
+  State<ConfirmViewPage> createState() => _ConfirmViewPageState();
 }
 
-class _LoginViewPageState extends State<LoginViewPage> {
+class _ConfirmViewPageState extends State<ConfirmViewPage> {
   @override
   void initState() {
     super.initState();
@@ -20,8 +21,8 @@ class _LoginViewPageState extends State<LoginViewPage> {
     return Scaffold(
         body: Center(
             child: OutlinedButton(
-      onPressed: () => getIt<AuthService>().login(),
-      child: const Text('Entrar no App'),
+      onPressed: () => context.go('/photo'),
+      child: const Text('Take another photo'),
     )));
   }
 }
