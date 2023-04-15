@@ -9,18 +9,6 @@ import '../Views/Home/home_viewmodel.dart';
 
 final routes = GoRouter(
     initialLocation: '/home',
-    refreshListenable: getIt<AuthService>(),
-    redirect: (context, state) {
-      final isAuthenticated = getIt<AuthService>().isAuthenticated;
-      final isLoginRoute = state.subloc == '/login';
-
-      if (!isAuthenticated) {
-        return isLoginRoute ? null : '/login';
-      }
-
-      if (isLoginRoute) return '/';
-      return null;
-    },
     routes: [
       GoRoute(
           path: '/home',
